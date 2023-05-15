@@ -15,6 +15,21 @@
     <textarea id="description" placeholder="Décrivez le problème et les réparations..."></textarea>
     <button id="envoyer" onclick="envoyerSignalement()"><a href="mailto:code.nature81@gmail.com">Envoyer</a></button>
   </div>
+<hr>
+<br><br><br>
+
+
+  <form action="mailto:code.nature81@gmail.com" method="GET">
+    Nom / Numéro Usine:</br>
+    <input name="subject" type="text" /></br>
+    Problème:</br>
+    <input name="cc" type="email" /><br />
+   
+    Réparation:<br/>
+    <textarea name="body"></textarea><br />
+    <br/>
+    <input type="submit" value="Envoyer" />
+  </form>
 
   <script src="script.js"></script>
 </body>
