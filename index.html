@@ -1,36 +1,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Application pour Techniciens</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Formulaire de contact</title>
+  <style>
+    /* Style CSS pour le formulaire */
+    form {
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 5px;
+    }
+
+    input[type="submit"] {
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Application pour Techniciens</h1>
+  <form id="contactForm" method="POST">
+    <label for="name">Nom de l'expéditeur :</label>
+    <input type="text" id="name" name="name" required>
 
-  <div id="informations-usine">
-    
+    <label for="subject">Objet du mail :</label>
+    <input type="text" id="subject" name="subject" required>
 
-  <div id="signalement">
-    <h2>Signaler un Problème et les réparations qui ont été effectuées </h2>
-    <textarea id="description" placeholder="Décrivez le problème et les réparations..."></textarea>
-    <button id="envoyer" onclick="envoyerSignalement()"><a href="mailto:code.nature81@gmail.com">Envoyer</a></button>
-  </div>
-<hr>
-<br><br><br>
+    <label for="message">Message :</label>
+    <textarea id="message" name="message" rows="4" required></textarea>
 
-
-  <form action="mailto:code.nature81@gmail.com" method="GET">
-    Nom / Numéro Usine:</br>
-    <input name="subject" type="text" /></br>
-    Problème:</br>
-    <input name="subject" type="text" /><br />
-   
-    Réparation:<br/>
-    <textarea name="body"></textarea><br />
-    <br/>
-    <input type="submit" value="Envoyer" />
+    <input type="submit" value="Envoyer">
   </form>
 
-  <script src="script.js"></script>
+  <script>
+    // JavaScript pour envoyer le formulaire
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'envoi_formulaire.php'); // Remplacez 'envoi_formulaire.php' par le nom de votre fichier PHP de traitement
+
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          alert('Le formulaire a été envoyé avec succès !');
+          form.reset();
+        } else {
+          alert('Une erreur est survenue lors de l\'envoi du formulaire. Veuillez réessayer.');
+        }
+      };
+
+      const data = `name=${encodeURIComponent(name)}&subject=${encodeURIComponent(subject)}&message=${encodeURIComponent(message)}`;
+      xhr.send(data);
+    });
+  </script>
 </body>
 </html>
